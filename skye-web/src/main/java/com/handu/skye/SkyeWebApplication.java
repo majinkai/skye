@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 @Import({SkyRocketMQConfig.class})
 public class SkyeWebApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(SkyeWebApplication.class, args);
     }
 
