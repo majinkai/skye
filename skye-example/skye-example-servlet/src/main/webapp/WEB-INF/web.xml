@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+  <listener>
+    <listener-class>com.handu.skye.servlet.SkyeServletRequestListener</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>demoServlet</servlet-name>
+    <servlet-class>com.handu.skye.example.servlet.DemoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>demoServlet</servlet-name>
+    <url-pattern>/demoServlet</url-pattern>
+  </servlet-mapping>
+
+</web-app>

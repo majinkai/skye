@@ -1,0 +1,35 @@
+* { font-family: Arial, Helvetica, sans-serif; color: #111; }
+
+.list { table-layout: fixed; }
+.list th,table td { font-size: 14px; }
+.list tbody tr:hover { background-color: #F0F0F0; }
+
+h1 small { font-size: 0.5em; color: #AAA; }
+
+.timeline * { font-size: 12px; }
+.timeline { margin-top: 20px; width:97%; table-layout: fixed; font-size: 12px; }
+.timeline td { padding: 0; margin: 0; }
+.timeline thead td span { display: block; text-align: right; margin-right: -18px; }
+
+.timeline tbody tr td:first-child { white-space: nowrap; overflow: hidden; }
+.timeline tbody tr td { position: relative; height: 20px; }
+.timeline tbody tr td div { cursor: pointer; position: absolute; top: 0; }
+.timeline tbody tr td div:hover { opacity: .8; }
+.timeline tbody tr td div span { margin-left: 5px; height: 20px; line-height: 20px; }
+.timeline tbody tr td div.e { width: 1px; background-color: #0000FF; height: 20px; box-shadow: none; }
+.timeline tbody tr td div.be { background-color: #FF3399; height: 24px; top: -2px; }
+.timeline tbody tr td b { display: block; font-weight: normal; background-color: #EEE; padding: 0 5px; line-height: 20px; }
+
+/* Span level */
+.normal { background-color: #669900; }
+.care { background-color: #FFFF33; }
+.warn { background-color: #FF9933; }
+.serious { background-color: #CC3333; }
+
+.panel { display: none; position: absolute; top: 70px; width: 600px; padding: 10px; background-color: #FCFCFC; border: solid 2px #CCC; box-shadow: 5px 5px 5px #DDD; border-radius:  5px; }
+.panel .close { position: absolute; right: -7px; top: -7px; width: 15px; height: 15px; line-height: 15px; text-align: center; font-weight: bold; border-radius: 10px; border: solid 3px #000; background-color: #FFF; transform:rotate(45deg); cursor: pointer; }
+.panel .close:hover { background-color: #FFCCCC; border-color: #990000; color: #990000; }
+.panel h4 { padding: 0 5px; margin: 15px 0; font-style: italic; }
+.panel table { width: 100%; table-layout: fixed; }
+.panel table td,.panel table th { background-color: #F3F3F3; padding: 5px; }
+.panel table th { background-color: #E9E9E9; }

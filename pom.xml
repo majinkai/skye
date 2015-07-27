@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.handu.skye</groupId>
+  <artifactId>skye-root</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <parent>
+    <groupId>com.handu.apollo</groupId>
+    <artifactId>apollo-parent</artifactId>
+    <version>1.3.1</version>
+  </parent>
+
+  <properties>
+    <rocketmq.version>3.2.6</rocketmq.version>
+    <fst.version>2.34</fst.version>
+    <jackson.version>2.5.3</jackson.version>
+  </properties>
+
+  <modules>
+    <module>skye-core</module>
+    <module>skye-collector</module>
+    <module>skye-httpclient</module>
+    <module>skye-servlet</module>
+    <module>skye-springmvc</module>
+    <module>skye-example</module>
+    <module>skye-mysql</module>
+    <module>skye-dubbo</module>
+    <module>skye-amqp</module>
+    <module>skye-web</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.alibaba.rocketmq</groupId>
+        <artifactId>rocketmq-client</artifactId>
+        <version>${rocketmq.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>de.ruedigermoeller</groupId>
+        <artifactId>fst</artifactId>
+        <version>${fst.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>jackson-core</artifactId>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>jackson-databind</groupId>
+        <artifactId>com.fasterxml.jackson.core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

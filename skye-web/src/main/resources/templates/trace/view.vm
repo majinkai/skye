@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <base href="/"/>
+  <title>$trace.name - SKYE WEB</title>
+  <link href="styles.css" rel="stylesheet" type="text/css"/>
+  <script src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>$trace.name <small>$trace.traceId</small></h1>
+
+#set($b1 = $duration / 5)
+#set($b2 = $b1 * 2)
+#set($b3 = $b1 * 3)
+#set($b4 = $b1 * 4)
+<table class="timeline">
+  <thead>
+  <tr>
+    <td><span>0ms</span></td>
+    <td><span>${b1}ms</span></td>
+    <td><span>${b2}ms</span></td>
+    <td><span>${b3}ms</span></td>
+    <td><span>${b4}ms</span></td>
+    <td><span>${duration}ms</span></td>
+  </tr>
+  </thead>
+  <tbody>
+  #set($baseIndent = 10)
+  #foreach ($s in $spans)
+    #set($idSize = $s.spanId.split("\.").size())
+    <tr>
+      <td title="$s.name">
+        #set($indent = $baseIndent * ($idSize - 1))
+        <b style="margin-left: ${indent}px;">$s.name</b>
+      </td>
+      <td colspan="5">
+        ## 计算span耗时
+        #set($spanDuration = $s.end - $s.start)
+        ## 计算span宽度 [(span耗时 / 整体耗时) * 100]
+        #set($spanWidth = ($spanDuration - 0.0) / $duration * 100)
+        ## 计算span左偏移量 [(span开始 - 全局开始) / 全局耗时 * 100]
+        #set($spanLeft = ($s.start - $start - 0.0) / $duration * 100)
+        ## 标记颜色
+        #if($spanDuration < 50)
+          #set($bg = "normal")
+        #elseif($spanDuration < 300)
+          #set($bg = "care")
+        #elseif($spanDuration < 2000)
+          #set($bg = "warn")
+        #else
+          #set($bg = "serious")
+        #end
+        <div id="${s.id}" class="span ${bg}" style="left: ${spanLeft}%; width: ${spanWidth}%;"><span>${spanDuration}ms</span></div>
+        #foreach ($e in $s.events)
+          ## 计算event左偏移量
+          #set($eLeft = ($e.timestamp - $start - 0.0) / $duration * 100)
+          <div class="e" style="left: ${eLeft}%;"></div>
+        #end
+        #foreach ($be in $s.binaryEvents)
+          ## 计算event左偏移量
+          #set($beLeft = ($be.timestamp - $start - 0.0) / $duration * 100)
+          <div class="e be" style="left: ${beLeft}%;"></div>
+        #end
+      </td>
+    </tr>
+
+  #end
+  </tbody>
+</table>
+<div id="spanDetailPanel" class="panel">
+  <div class="close">+</div>
+  <div id="eventPanel">
+    <h4>Event</h4>
+    <table>
+      <thead>
+      <tr>
+        <th>Key</th>
+        <th>Host</th>
+        <th>Port</th>
+        <th>At(ms)</th>
+      </tr>
+      </thead>
+      <tbody id="event"></tbody>
+    </table>
+  </div>
+
+  <div id="binaryEventPanel">
+    <h4>Binary event</h4>
+    <table>
+      <thead>
+      <tr>
+        <th>Key</th>
+        <th>Host</th>
+        <th>Port</th>
+        <th>At(ms)</th>
+      </tr>
+      </thead>
+      <tbody id="binaryEvent"></tbody>
+    </table>
+  </div>
+</div>
+<script>
+  $(function() {
+    var spanDetailPanel = $('#spanDetailPanel');
+    changePosition();
+
+    $(window).resize(function() {
+      changePosition();
+    });
+
+    $('#spanDetailPanel .close').click(function() {
+      spanDetailPanel.hide();
+    });
+    $('.span').click(function() {
+      $.ajax({
+        url: 'a/span/' + $(this).attr('id'),
+        data: {'start': ${start}},
+        success: function(data) {
+          var i, _html, start = data.start, span = data.span;
+          if (span.events && span.events.length) {
+            _html = [];
+            for (i = 0; i < span.events.length; i++) {
+              _html.push('<tr>');
+              _html.push(  '<td>' + v(span.events[i].key) + '</td>');
+              _html.push(  '<td>' + v(span.events[i].host) + '</td>');
+              _html.push(  '<td>' + v(span.events[i].port) + '</td>');
+              _html.push(  '<td>' + (span.events[i].timestamp - start) + '</td>');
+              _html.push('</tr>');
+            }
+            $('#event').html(_html.join(''));
+            $('#eventPanel').show();
+          } else {
+            $('#eventPanel').hide();
+          }
+
+          if (span.binaryEvents && span.binaryEvents.length) {
+            _html = [];
+            for (i = 0; i < span.binaryEvents.length; i++) {
+              _html.push('<tr>');
+              _html.push(  '<td>' + v(span.binaryEvents[i].key) + '</td>');
+              _html.push(  '<td>' + v(span.binaryEvents[i].host) + '</td>');
+              _html.push(  '<td>' + v(span.binaryEvents[i].port) + '</td>');
+              _html.push(  '<td>' + (span.binaryEvents[i].timestamp - start) + '</td>');
+              _html.push('</tr>');
+              _html.push('<tr><td colspan="4">' + span.binaryEvents[i].value + '</td></tr>')
+            }
+            $('#binaryEvent').html(_html.join(''));
+            $('#binaryEventPanel').show();
+          } else {
+            $('#binaryEventPanel').hide();
+          }
+
+          spanDetailPanel.show();
+        }
+      })
+    });
+
+    function changePosition() {
+      var pw = spanDetailPanel.width();
+      spanDetailPanel.css("left", $(document).width()/2 - pw/2);
+    }
+
+    function v(value) {
+      return value || '&nbsp;';
+    }
+  });
+</script>
+</body>
+</html>
