@@ -14,6 +14,10 @@ public class SkyeDubboConsumerFilter implements Filter {
 
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 
+        if ("com.alibaba.dubbo.monitor.MonitorService".equals(invoker.getInterface().getName())) {
+            return invoker.invoke(invocation);
+        }
+
         RpcContext context = RpcContext.getContext();
         Endpoint endpoint = new Endpoint(context.getLocalHost(), context.getLocalPort());
 
