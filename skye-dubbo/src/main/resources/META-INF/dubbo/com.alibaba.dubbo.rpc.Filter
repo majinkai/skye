@@ -1,0 +1,2 @@
+skyeConsumer=com.handu.skye.dubbo.SkyeDubboConsumerFilter
+skyeProvider=com.handu.skye.dubbo.SkyeDubboProviderFilter

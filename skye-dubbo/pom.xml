@@ -21,6 +21,7 @@
       <groupId>com.alibaba</groupId>
       <artifactId>dubbo-rpc-api</artifactId>
       <version>${dubbox.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

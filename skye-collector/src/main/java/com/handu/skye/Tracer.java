@@ -76,7 +76,7 @@ public final class Tracer {
     }
 
     // 释放资源
-    public static void release() {
+    private static void release() {
         LOG.debug("Release trace: {}", Tracer.getTraceId());
         INSTANCE.traceIdHolder.remove();
         INSTANCE.spanIdHolder.remove();

@@ -39,7 +39,6 @@ public class SkyeDubboConsumerFilter implements Filter {
         } finally {
             span.addEvent(Event.CLIENT_RECV, endpoint);
             Tracer.commit(span);
-            Tracer.release();
         }
     }
 

@@ -29,8 +29,6 @@ public final class HttpTracerUtil {
             span.addEvent(Event.SERVER_SEND, new Endpoint(request.getLocalAddr(), request.getLocalPort()));
             Tracer.commit(span);
         }
-        // release
-        Tracer.release();
     }
 
 }

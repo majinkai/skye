@@ -45,7 +45,6 @@ public class SkyeDubboProviderFilter implements Filter {
         } finally {
             span.addEvent(Event.SERVER_SEND, endpoint);
             Tracer.commit(span);
-            Tracer.release();
         }
     }
 

@@ -38,7 +38,6 @@ public abstract class SkyeMessageListener implements MessageListener {
             span.addBinaryEvent("consumed.end", properties.getReceivedExchange() + ":" + properties.getReceivedRoutingKey());
             Tracer.commit(span);
         }
-        Tracer.release();
     }
 
     public abstract void handleMessage(Message message);
