@@ -23,6 +23,10 @@ public class TraceM {
 
     @Transient
     private List<SpanM> spans;
+    @Transient
+    private long start;
+    @Transient
+    private long end;
 
     public TraceM() {
         this.spans = Lists.newArrayList();
@@ -62,10 +66,32 @@ public class TraceM {
         this.spans = spans;
     }
 
+    public long getStart() {
+        return start;
+    }
+
+    public void setStart(long start) {
+        this.start = start;
+    }
+
+    public long getEnd() {
+        return end;
+    }
+
+    public void setEnd(long end) {
+        this.end = end;
+    }
+
+    public long getDuration() {
+        return end - start;
+    }
+
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("id", id)
                 .add("name", name)
+                .add("start", start)
+                .add("end", end)
                 .add("spans", spans)
                 .toString();
     }

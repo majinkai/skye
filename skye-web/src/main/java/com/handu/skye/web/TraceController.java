@@ -4,7 +4,6 @@ import com.handu.skye.domain.SpanM;
 import com.handu.skye.domain.TraceM;
 import com.handu.skye.repository.SpanMRepository;
 import com.handu.skye.repository.TraceMRepository;
-import com.handu.skye.util.TraceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,26 +39,31 @@ public class TraceController {
     public String view(@PathVariable String traceId, Map<String, Object> model) {
         TraceM trace = traceMRepository.findByTraceId(traceId);
         if (trace != null) {
-            model.put("trace", trace);
-
             List<SpanM> spans = spanMRepository.findByTraceId(traceId);
             if (spans != null) {
                 Collections.sort(spans);
 
-                SpanM root = spans.get(0);
+                long start = -1;
+                long end = 0;
 
-                long start = TraceUtil.getStart(root);
-                long end = TraceUtil.getEnd(root);
+                for (SpanM spanM : spans) {
+                    if (start == -1 || spanM.getStart() < start) {
+                        start = spanM.getStart();
+                    }
+                    if (spanM.getEnd() > end) {
+                        end = spanM.getEnd();
+                    }
+                }
+
+                trace.setStart(start);
+                trace.setEnd(end);
 
                 model.put("spans", spans);
-                model.put("start", start);
-                model.put("end", end);
-                model.put("duration", end - start);
+                model.put("trace", trace);
+                return "trace/view";
             }
-            return "trace/view";
-        } else {
-            return "redirect:trace";
         }
+        return "redirect:trace";
     }
 
 }

@@ -50,7 +50,7 @@ public class RocketMQSpanDeliver implements SpanDeliver {
                 LOG.debug("Ready for send {}", span);
                 Message message = new Message(Header.MQ_TOPIC, Header.MQ_TAG, Serializer.ser(span));
                 SendResult sendResult = producer.send(message);
-                LOG.debug("SendResult={}, Message={}", sendResult, message);
+                LOG.debug("SendResult={}", sendResult);
             }
         } catch (Exception e) {
             LOG.error("Send message exception", e);

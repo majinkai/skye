@@ -11,7 +11,7 @@
 
 <h1>$trace.name <small>$trace.traceId</small></h1>
 
-#set($b1 = $duration / 5)
+#set($b1 = $trace.duration / 5)
 #set($b2 = $b1 * 2)
 #set($b3 = $b1 * 3)
 #set($b4 = $b1 * 4)
@@ -23,31 +23,37 @@
     <td><span>${b2}ms</span></td>
     <td><span>${b3}ms</span></td>
     <td><span>${b4}ms</span></td>
-    <td><span>${duration}ms</span></td>
+    <td><span>${trace.duration}ms</span></td>
   </tr>
   </thead>
   <tbody>
+  <tr>
+    <td><b>Invoke chain</b></td>
+    <td colspan="5">
+      <div class="chain" style="width: 100%;"><span>${trace.duration}ms</span></div>
+    </td>
+  </tr>
   #set($baseIndent = 10)
   #foreach ($s in $spans)
     #set($idSize = $s.spanId.split("\.").size())
     <tr>
       <td title="$s.name">
-        #set($indent = $baseIndent * ($idSize - 1))
+        #set($indent = $baseIndent * $idSize)
         <b style="margin-left: ${indent}px;">$s.name</b>
       </td>
       <td colspan="5">
         ## 计算span耗时
         #set($spanDuration = $s.end - $s.start)
         ## 计算span宽度 [(span耗时 / 整体耗时) * 100]
-        #set($spanWidth = ($spanDuration - 0.0) / $duration * 100)
+        #set($spanWidth = ($spanDuration - 0.0) / $trace.duration * 100)
         ## 计算span左偏移量 [(span开始 - 全局开始) / 全局耗时 * 100]
-        #set($spanLeft = ($s.start - $start - 0.0) / $duration * 100)
+        #set($spanLeft = ($s.start - $trace.start - 0.0) / $trace.duration * 100)
         ## 标记颜色
-        #if($spanDuration < 50)
+        #if($spanDuration < 100)
           #set($bg = "normal")
-        #elseif($spanDuration < 300)
+        #elseif($spanDuration < 500)
           #set($bg = "care")
-        #elseif($spanDuration < 2000)
+        #elseif($spanDuration < 5000)
           #set($bg = "warn")
         #else
           #set($bg = "serious")
@@ -55,12 +61,12 @@
         <div id="${s.id}" class="span ${bg}" style="left: ${spanLeft}%; width: ${spanWidth}%;"><span>${spanDuration}ms</span></div>
         #foreach ($e in $s.events)
           ## 计算event左偏移量
-          #set($eLeft = ($e.timestamp - $start - 0.0) / $duration * 100)
+          #set($eLeft = ($e.timestamp - $trace.start - 0.0) / $trace.duration * 100)
           <div class="e" style="left: ${eLeft}%;"></div>
         #end
         #foreach ($be in $s.binaryEvents)
           ## 计算event左偏移量
-          #set($beLeft = ($be.timestamp - $start - 0.0) / $duration * 100)
+          #set($beLeft = ($be.timestamp - $trace.start - 0.0) / $trace.duration * 100)
           <div class="e be" style="left: ${beLeft}%;"></div>
         #end
       </td>
@@ -116,7 +122,7 @@
     $('.span').click(function() {
       $.ajax({
         url: 'a/span/' + $(this).attr('id'),
-        data: {'start': ${start}},
+        data: {'start': ${trace.start}},
         success: function(data) {
           var i, _html, start = data.start, span = data.span;
           if (span.events && span.events.length) {

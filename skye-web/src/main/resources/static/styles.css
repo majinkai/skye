@@ -13,14 +13,16 @@ h1 small { font-size: 0.5em; color: #AAA; }
 
 .timeline tbody tr td:first-child { white-space: nowrap; overflow: hidden; }
 .timeline tbody tr td { position: relative; height: 20px; }
-.timeline tbody tr td div { cursor: pointer; position: absolute; top: 0; }
-.timeline tbody tr td div:hover { opacity: .8; }
+.timeline tbody tr td div { position: absolute; top: 0; }
+.timeline tbody tr td div.span:hover { opacity: .8; cursor: pointer; }
 .timeline tbody tr td div span { margin-left: 5px; height: 20px; line-height: 20px; }
 .timeline tbody tr td div.e { width: 1px; background-color: #0000FF; height: 20px; box-shadow: none; }
 .timeline tbody tr td div.be { background-color: #FF3399; height: 24px; top: -2px; }
 .timeline tbody tr td b { display: block; font-weight: normal; background-color: #EEE; padding: 0 5px; line-height: 20px; }
 
 /* Span level */
+.chain { background-color: #282828; }
+.chain span { color: #FFF; }
 .normal { background-color: #669900; }
 .care { background-color: #FFFF33; }
 .warn { background-color: #FF9933; }
