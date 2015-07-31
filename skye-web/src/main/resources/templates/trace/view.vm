@@ -22,10 +22,10 @@
   <thead>
   <tr>
     <td><span>0ms</span></td>
-    <td><span>${b1}ms</span></td>
-    <td><span>${b2}ms</span></td>
-    <td><span>${b3}ms</span></td>
-    <td><span>${b4}ms</span></td>
+    <td>#if($b1 > 0)<span>${b1}ms</span>#else&nbsp;#end</td>
+    <td>#if($b2 > 0)<span>${b2}ms</span>#else&nbsp;#end</td>
+    <td>#if($b3 > 0)<span>${b3}ms</span>#else&nbsp;#end</td>
+    <td>#if($b4 > 0)<span>${b4}ms</span>#else&nbsp;#end</td>
     <td><span>${trace.duration}ms</span></td>
   </tr>
   </thead>
