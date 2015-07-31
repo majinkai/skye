@@ -4,7 +4,7 @@
 .list th,table td { font-size: 14px; }
 .list tbody tr:hover { background-color: #F0F0F0; }
 
-h1 small { font-size: 0.5em; color: #AAA; }
+h2 small { font-size: 0.5em; color: #AAA; }
 
 .timeline * { font-size: 12px; }
 .timeline { margin-top: 20px; width:97%; table-layout: fixed; font-size: 12px; }

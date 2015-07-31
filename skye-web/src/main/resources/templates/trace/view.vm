@@ -9,7 +9,10 @@
 </head>
 <body>
 
-<h1>$trace.name <small>$trace.traceId</small></h1>
+<h2>
+  <div>$trace.name</div>
+  <small>$trace.traceId <i>${dateTool.format($trace.created)}</i></small>
+</h2>
 
 #set($b1 = $trace.duration / 5)
 #set($b2 = $b1 * 2)
