@@ -14,8 +14,8 @@ import com.handu.skye.domain.TraceM;
  */
 public class TraceUtil {
 
-    public static TraceM getTraceM(Span span) {
-        return new TraceM(span.getTraceId(), span.getName());
+    public static TraceM getTraceM(SpanM spanM) {
+        return new TraceM(spanM.getTraceId(), spanM.getName(), spanM.getStart());
     }
 
     public static SpanM getSpanM(Span span) {

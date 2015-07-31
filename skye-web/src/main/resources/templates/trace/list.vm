@@ -7,12 +7,12 @@
   <link href="styles.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
 <table class="list" border="1" cellpadding="5" cellspacing="1">
   <thead>
   <tr>
     <th>Trace id</th>
     <th>Trace name</th>
+    <th>Created</th>
   </tr>
   </thead>
   <tbody>
@@ -20,6 +20,7 @@
   <tr>
     <td><a href="trace/$t.traceId">$t.traceId</a></td>
     <td>$t.name</td>
+    <td>${dateTool.format($t.created)}</td>
   </tr>
   #end
   </tbody>

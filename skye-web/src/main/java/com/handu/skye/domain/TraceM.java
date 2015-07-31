@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class TraceM {
     @Indexed(unique = true)
     private String traceId;
     private String name;
+    private Date created;
 
     @Transient
     private List<SpanM> spans;
@@ -32,10 +34,11 @@ public class TraceM {
         this.spans = Lists.newArrayList();
     }
 
-    public TraceM(String traceId, String name) {
+    public TraceM(String traceId, String name, long start) {
         this.traceId = traceId;
         this.name = name;
         this.spans = Lists.newArrayList();
+        this.created = new Date(start);
     }
 
     public String getId() {
@@ -56,6 +59,14 @@ public class TraceM {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public List<SpanM> getSpans() {

@@ -6,6 +6,7 @@ import com.alibaba.rocketmq.client.consumer.listener.MessageListenerConcurrently
 import com.alibaba.rocketmq.common.message.MessageExt;
 import com.handu.skye.Span;
 import com.handu.skye.common.Serializer;
+import com.handu.skye.domain.SpanM;
 import com.handu.skye.repository.SpanMRepository;
 import com.handu.skye.repository.TraceMRepository;
 import com.handu.skye.util.TraceUtil;
@@ -33,11 +34,13 @@ public class SpanListener implements MessageListenerConcurrently {
         for (MessageExt message : list) {
             Span span = Serializer.deser(message.getBody());
 
-            spanMRepository.save(TraceUtil.getSpanM(span));
+            SpanM spanM = TraceUtil.getSpanM(span);
+
+            spanMRepository.save(spanM);
             LOG.debug("Save span to mongodb, spanId: {}, traceId: {}", span.getId(), span.getTraceId());
 
             if (span.isRoot()) {
-                traceMRepository.save(TraceUtil.getTraceM(span));
+                traceMRepository.save(TraceUtil.getTraceM(spanM));
                 LOG.debug("Save trace to mongodb, traceId: {}", span.getTraceId());
             }
         }
