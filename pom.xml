@@ -9,16 +9,24 @@
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <parent>
-    <groupId>com.handu.apollo</groupId>
-    <artifactId>apollo-parent</artifactId>
-    <version>1.3.1</version>
-  </parent>
-
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     <rocketmq.version>3.2.6</rocketmq.version>
     <fst.version>2.34</fst.version>
     <jackson.version>2.5.3</jackson.version>
+    <junit.version>4.11</junit.version>
+    <slf4j.version>1.7.7</slf4j.version>
+    <guava.version>16.0.1</guava.version>
+    <springframework.version>4.1.6.RELEASE</springframework.version>
+    <springframework.amqp.version>1.4.4.RELEASE</springframework.amqp.version>
+    <mybatis.version>3.2.8</mybatis.version>
+    <servlet.version>2.5</servlet.version>
+    <commons-lang3.version>3.4</commons-lang3.version>
+    <httpclient.version>4.4.1</httpclient.version>
+    <mysql.version>5.1.35</mysql.version>
+    <dubbox.version>2.8.4</dubbox.version>
+    <maven-tomcat7.version>2.2</maven-tomcat7.version>
   </properties>
 
   <modules>
@@ -37,6 +45,21 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-rabbit</artifactId>
+        <version>${springframework.amqp.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.alibaba.rocketmq</groupId>
         <artifactId>rocketmq-client</artifactId>
         <version>${rocketmq.version}</version>
@@ -51,7 +74,37 @@
         <groupId>com.fasterxml.jackson.core</groupId>
         <version>${jackson.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${springframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpclient.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>${servlet.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+        <scope>provided</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>
